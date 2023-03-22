@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegexGenerateRequest {
+public class CodesDTO {
 
   List<String> codes;
 }
