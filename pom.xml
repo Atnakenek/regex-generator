@@ -8,16 +8,19 @@
 		<version>2.7.9</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>com.github.atnakenek</groupId>
   <artifactId>regex-generator</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>Regex generator</name>
 	<description>Demo project for generating the best-matching regex of alphanumeric strings</description>
+
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 		<mapstruct.version>1.5.3.Final</mapstruct.version>
 	</properties>
+
   <dependencies>
     <dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -47,15 +50,9 @@
     </dependency>
     <dependency>
 			<groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-tomcat</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-			<groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
 
   <build>
