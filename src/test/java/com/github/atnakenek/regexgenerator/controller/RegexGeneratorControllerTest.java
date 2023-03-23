@@ -25,13 +25,13 @@ import org.springframework.test.web.servlet.MockMvc;
 public class RegexGeneratorControllerTest {
 
   @Autowired
-  MockMvc mockMvc;
+  private MockMvc mockMvc;
 
   @MockBean
-  RegexGeneratorService regexGeneratorService;
+  private RegexGeneratorService regexGeneratorService;
 
   @MockBean
-  RegexGeneratorMapper regexGeneratorMapper;
+  private RegexGeneratorMapper regexGeneratorMapper;
 
   @Test
   public void when_italianCarPlatesStrings_then_regexIsReturned() throws Exception {

@@ -17,13 +17,13 @@ import org.springframework.test.web.servlet.MockMvc;
 public class RegexGeneratorControllerIntegrationTest {
 
   @Autowired
-  MockMvc mockMvc;
+  private MockMvc mockMvc;
 
   @Test
   public void when_italianCarPlatesStrings_then_regexIsReturned() throws Exception {
     mockMvc.perform(post("/api/regex/generate")
             .contentType(APPLICATION_JSON)
-            .content("{\"texts\": [\"AB123ZZ\",\"BB742TG\",\"CF678HG\"]}")
+            .content("{\"codes\": [\"AB123ZZ\",\"BB742TG\",\"CF678HG\"]}")
             .accept(APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(content().contentType(APPLICATION_JSON))

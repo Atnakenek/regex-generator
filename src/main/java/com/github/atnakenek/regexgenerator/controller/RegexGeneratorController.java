@@ -22,10 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class RegexGeneratorController {
 
   @Autowired
-  RegexGeneratorService regexGeneratorService;
+  private RegexGeneratorService regexGeneratorService;
 
   @Autowired
-  RegexGeneratorMapper regexGeneratorMapper;
+  private RegexGeneratorMapper regexGeneratorMapper;
 
   @PostMapping(path = "/generate",
       consumes = {APPLICATION_JSON_VALUE},
