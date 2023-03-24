@@ -4,7 +4,7 @@ jdk:
 deploy:
   provider: heroku
   api_key:
-    secure: HEROKU_API_KEY
+    secure: "leNQTUkk9rM8ZxpLKFRrAkXCWIOzTUGbdbdzYhe/EmhdlZaqDsb9BrFUqsX+2t27SvPdFK1DEHCIUDegRLAphF+3Wck9ERtnRmdNYXvCBLXODC5az+b6QsE1G6Ykw4e7CzfvATzTod3KKu6Vi4jUSFLjUwtxL2LZ4xN7DKEetXcrVWxyR/nitabONJU27IZPaGG86f9Hz1URchHM69tDk12Bfgz3uD+XCHUGzkaq9ZtZQH64KgAdqEmC4D+dBML/eUqQM1wwI1tgVNTYEDLVP9XVUuJ6+1yM2t3Rt+57WmGYAGZn+G6i41CyiwYaBKntYiL8GI9F3i9g7EYyq9NjQ4/q1hcM6H0JN2SbJ+oZk4kPHTFWBGFHCIanQna9QJqNgQrkRPLAgpEyzhXjNtc8BA6MI8eLzrgFt20y0zBPZTTVrLCdeZ4BWxrXqI3EXm3ysN+0cB/Djs4ZhZuKrY3Cew7+apgrhCPTZiMVLDHXGtLzUh/bG8YLdIowhK4no1DG4cFLa2Qwx0XEWTYLyYGq+z32B9Lbpo89tlneLrOi99nxrvNXRBHlqGsq07bBIidV3qGm9mA7GMQu5UpJhF3/ZFoWwAkxTxOReNqyj2wkOZiCA6Yjd++Zt2zOQJa0CEN0ad6EHJ/7sjOxnYe2nocUAyPo4mXQNs3FfFmnldZiUjk="
   app: regex-gen
 before_install:
   - chmod +x mvnw
