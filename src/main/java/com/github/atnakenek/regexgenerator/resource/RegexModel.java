@@ -1,15 +1,13 @@
 package com.github.atnakenek.regexgenerator.resource;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
 @Builder
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class RegexModel {
 
-  String regex;
+  private String regex;
 }

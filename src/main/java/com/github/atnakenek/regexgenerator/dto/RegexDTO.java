@@ -5,13 +5,12 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-@EqualsAndHashCode(of="type")
+@EqualsAndHashCode(of = "type")
 @NoArgsConstructor
 @AllArgsConstructor
 public class RegexDTO {
 
   private RegexType type;
-  int min = 0;
-  int max = 0;
-
+  private int min = 0;
+  private int max = 0;
 }

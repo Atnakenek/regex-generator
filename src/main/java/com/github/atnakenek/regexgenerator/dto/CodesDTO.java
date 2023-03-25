@@ -1,16 +1,14 @@
 package com.github.atnakenek.regexgenerator.dto;
 
 import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
 @Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CodesDTO {
 
-  List<String> codes;
+  private List<String> codes;
 }

@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.github.atnakenek.regexgenerator.dto.CodesDTO;
 import com.github.atnakenek.regexgenerator.dto.RegexDTO;
+import com.github.atnakenek.regexgenerator.dto.RegexType;
 import com.github.atnakenek.regexgenerator.mapper.RegexGeneratorMapper;
 import com.github.atnakenek.regexgenerator.resource.RegexModel;
 import com.github.atnakenek.regexgenerator.service.RegexGeneratorService;
@@ -36,16 +37,14 @@ public class RegexGeneratorControllerTest {
   @Test
   public void when_italianCarPlatesStrings_then_regexIsReturned() throws Exception {
     when(regexGeneratorService.generate(any(CodesDTO.class))).thenReturn(
-        Arrays.asList(new RegexDTO(), new RegexDTO(), new RegexDTO()));
+        Arrays.asList(new RegexDTO(RegexType.UPPER_LETTER, 2, 2),
+            new RegexDTO(RegexType.DIGIT, 3, 3),
+            new RegexDTO(RegexType.UPPER_LETTER, 2, 2)));
     when(regexGeneratorMapper.toModel(anyList())).thenReturn(
         new RegexModel("[A-Z]{2}\\d{3}[A-Z]{2}"));
-    mockMvc.perform(post("/api/regex/generate")
-            .contentType(APPLICATION_JSON)
-            .content("{\"texts\": [\"AB123ZZ\",\"BB742TG\",\"CF678HG\"]}")
-            .accept(APPLICATION_JSON))
-        .andExpect(status().isOk())
-        .andExpect(content().contentType(APPLICATION_JSON))
+    mockMvc.perform(post("/api/regex/generate").contentType(APPLICATION_JSON)
+            .content("{\"texts\": [\"AB123ZZ\",\"BB742TG\",\"CF678HG\"]}").accept(APPLICATION_JSON))
+        .andExpect(status().isOk()).andExpect(content().contentType(APPLICATION_JSON))
         .andExpect(jsonPath("$.regex").value("[A-Z]{2}\\d{3}[A-Z]{2}"));
-
   }
 }
