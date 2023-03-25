@@ -1,8 +1,10 @@
 package com.github.atnakenek.regexgenerator.resource;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Builder
 @Setter
 @Getter
 @NoArgsConstructor

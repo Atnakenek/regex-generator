@@ -11,10 +11,11 @@ import org.mapstruct.Mapper;
 public interface RegexGeneratorMapper {
 
   default RegexModel toModel(List<RegexDTO> obj) {
-    RegexModel regexModel = RegexModel.builder().build();
+    RegexModel regexModel = new RegexModel();
     if (obj != null) {
       String regex = obj.stream()
-          .map(r -> r.getType().getRepresentation() + mapOccurrences(r.getMin(), r.getMax()))
+          .map(r -> r.getType().getRepresentation() + mapOccurrences(r.getMinOccurrences(),
+              r.getMaxOccurrences()))
           .collect(Collectors.joining());
       regexModel.setRegex(regex);
     }

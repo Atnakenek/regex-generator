@@ -1,6 +1,6 @@
 package com.github.atnakenek.regexgenerator.service.impl;
 
-import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.github.atnakenek.regexgenerator.dto.CodesDTO;
@@ -29,8 +29,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class RegexGeneratorServiceImplTest {
 
   public static final String TYPE = "type";
-  public static final String MIN = "min";
-  public static final String MAX = "max";
+  public static final String MIN = "minOccurrences";
+  public static final String MAX = "maxOccurrences";
   @InjectMocks
   private RegexGeneratorServiceImpl regexGeneratorService;
 

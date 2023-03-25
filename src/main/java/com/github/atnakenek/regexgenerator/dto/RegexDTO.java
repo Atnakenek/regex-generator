@@ -4,13 +4,23 @@ import lombok.*;
 
 @Getter
 @Setter
-@Builder
 @EqualsAndHashCode(of = "type")
-@NoArgsConstructor
+@RequiredArgsConstructor
 @AllArgsConstructor
 public class RegexDTO {
 
+  @NonNull
   private RegexType type;
-  private int min = 0;
-  private int max = 0;
+  private int minOccurrences = 1;
+  private int maxOccurrences = 1;
+
+  public void addOccurrence() {
+    ++minOccurrences;
+    ++maxOccurrences;
+  }
+
+  public void adjustMinMax(int occurrences) {
+    minOccurrences = Math.min(minOccurrences, occurrences);
+    maxOccurrences = Math.max(this.maxOccurrences, occurrences);
+  }
 }

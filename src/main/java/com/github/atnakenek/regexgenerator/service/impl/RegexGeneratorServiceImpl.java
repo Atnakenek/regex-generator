@@ -24,71 +24,71 @@ public class RegexGeneratorServiceImpl implements RegexGeneratorService {
       throw new InvalidInputException();
     }
     // it is used to determine the shortest regex pattern of all strings
-    int minIdx = -1;
+    int minPatternIdx = -1;
     for (String str : codeList) {
-      int regexIdx = 0;
+      int regexMapIdx = 0;
       if (str == null) {
         throw new InvalidInputException();
       }
       if (!str.isEmpty()) {
-        int occurrences = 1;
-        RegexType currentType = RegexType.getType(str.charAt(0));
+        RegexDTO currentRegex = getRegex(str, 0);
         for (int charIdx = 0; charIdx < str.length(); charIdx++) {
-          if (currentType == RegexType.UNSUPPORTED) {
+          if (currentRegex.getType() == RegexType.UNSUPPORTED) {
             throw new UnsupportedCharacterException(str.charAt(charIdx));
           }
-          RegexType nextType = getNextType(str, charIdx);
-          if (currentType == nextType) {
-            ++occurrences;
+          RegexDTO nextRegex = getRegex(str, charIdx + 1);
+          if (currentRegex.equals(nextRegex)) {
+            currentRegex.addOccurrence();
           } else {
-            // next char is different, so add/merge this type to map
-            regexIdx = placeRegex(regexMap, regexIdx, occurrences, currentType) + 1;
-            currentType = nextType;
-            occurrences = 1;
+            // next char is different, so add/merge this to map
+            regexMapIdx = addRegex(currentRegex, regexMap, regexMapIdx) + 1;
+            currentRegex = nextRegex;
           }
         }
       }
-      minIdx = minIdx == -1 ? regexMap.size() : Math.min(minIdx, regexIdx);
+      minPatternIdx = minPatternIdx == -1 ? regexMap.size() : Math.min(minPatternIdx, regexMapIdx);
     }
-    setLongerPatternsOptional(regexMap, minIdx);
+    // longer regexes must be optional
+    setOptionalRegexes(regexMap, minPatternIdx);
     return new ArrayList<>(regexMap.values());
   }
 
-  private RegexType getNextType(String str, int index) {
-    boolean isLastChar = index == str.length() - 1;
-    return isLastChar ? null : RegexType.getType(str.charAt(index + 1));
+  private RegexDTO getRegex(String str, int index) {
+    RegexDTO regex = null;
+    if (index < str.length()) {
+      RegexType type = RegexType.getType(str.charAt(index));
+      regex = new RegexDTO(type);
+    }
+    return regex;
   }
 
-  private int placeRegex(Map<Integer, RegexDTO> regexMap, int index, int occurrences,
-      RegexType type) {
-    RegexDTO regex = buildRegex(occurrences, type);
+  private int addRegex(RegexDTO regex, Map<Integer, RegexDTO> regexMap, int mapIndex) {
     boolean isMapped = false;
     while (!isMapped) {
-      RegexDTO mappedRegex = regexMap.putIfAbsent(index, regex);
+      RegexDTO mappedRegex = regexMap.putIfAbsent(mapIndex, regex);
       // when null, it means empty bucket and successful insertion
       if (mappedRegex == null) {
         isMapped = true;
-      } else if (mappedRegex.getType() != regex.getType()) {
-        // if already present but type does not match, minimum occurrences must be 0
-        mappedRegex.setMin(0);
+      } else if (!regex.equals(mappedRegex)) {
+        // if in the current bucket a different regex is already present, min occurrences must be 0
+        mappedRegex.setMinOccurrences(0);
         //and try next bucket
-        ++index;
+        ++mapIndex;
       } else {
-        // if they match, set min and max between those
-        mappedRegex.setMin(Math.min(mappedRegex.getMin(), regex.getMin()));
-        mappedRegex.setMax(Math.max(mappedRegex.getMax(), regex.getMax()));
+        // if they match, set min/max between mapped min/max and current occurrences
+        mappedRegex.adjustMinMax(regex.getMaxOccurrences());
         isMapped = true;
       }
     }
-    return index;
+    // return updated map index (when regex types collide)
+    return mapIndex;
   }
 
-  private RegexDTO buildRegex(int occurrences, RegexType regexType) {
-    return RegexDTO.builder().type(regexType).min(occurrences).max(occurrences).build();
-  }
-
-  private void setLongerPatternsOptional(Map<Integer, RegexDTO> regexMap, int index) {
-    regexMap.entrySet().stream().filter(e -> e.getKey() >= index).map(Entry::getValue)
-        .forEach(r -> r.setMin(0));
+  private void setOptionalRegexes(Map<Integer, RegexDTO> regexMap, int startIndex) {
+    regexMap.entrySet()
+        .stream()
+        .filter(e -> e.getKey() >= startIndex)
+        .map(Entry::getValue)
+        .forEach(r -> r.setMinOccurrences(0));
   }
 }
